@@ -2,17 +2,17 @@
 import Foundation
 
 class Item : NSObject, NSCoding {
-    @objc var date: String!
+    @objc var date: Date!
     var name: String!
     var image: Data?
-    init(date: String, name: String) {
+    init(date: Date, name: String) {
         super.init()
         self.date = date
         self.name = name
     }
     required init?(coder aDecoder: NSCoder) {
         super.init()
-        date = aDecoder.decodeObject(forKey: "date") as! String
+        date = aDecoder.decodeObject(forKey: "date") as! Date
         name = aDecoder.decodeObject(forKey: "name") as! String
         if let imageData = aDecoder.decodeObject(forKey: "image") as? Data {
             self.image = imageData
@@ -30,11 +30,19 @@ protocol DataModelDelegate : class {
 }
 
 class DataModel {
+
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
+        return dateFormatter
+    }()
     
     weak var delegate: DataModelDelegate?
-
+    
     private let imageDownloader = ImageDownloader()
-
+    
     var items: [Item] = DataStorage.load() {
         didSet {
             DataStorage.save(items)
@@ -42,7 +50,7 @@ class DataModel {
     }
 
     func addImage() {
-        items.append(Item(date: "date", name: randomName()))
+        items.append(Item(date: Date(), name: randomName()))
     }
 
     func updateName(forRowAt row: Int) {

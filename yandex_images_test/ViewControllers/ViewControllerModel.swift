@@ -32,7 +32,9 @@ class ViewControllerModelImpl: ViewControllerModel {
     }
 
     func cellViewModel(forRowAt row: Int) -> CellView.Model {
-        return CellView.Model(item: dataModel.items[row])
+        let item = dataModel.items[row]
+        let date = dataModel.dateFormatter.string(from: item.date)
+        return CellView.Model(date: date, name: item.name, imageData: item.image)
     }
 
 }
@@ -45,10 +47,3 @@ extension ViewControllerModelImpl : DataModelDelegate {
     
 }
 
-extension CellView.Model {
-    init(item: Item) {
-        date = item.date
-        name = item.name
-        imageData = item.image
-    }
-}

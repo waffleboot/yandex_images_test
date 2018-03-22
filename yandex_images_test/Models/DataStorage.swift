@@ -12,5 +12,5 @@ struct DataStorage {
         let data = NSKeyedArchiver.archivedData(withRootObject: items)
         UserDefaults.standard.set(data, forKey: "items")
     }
-
+    
 }
