@@ -26,7 +26,7 @@ class Item : NSObject, NSCoding {
 }
 
 class DataModel {
-    
+
     var items: [Item] = DataStorage.load() {
         didSet {
             DataStorage.save(items)
@@ -34,7 +34,23 @@ class DataModel {
     }
 
     func addImage() {
-        items.append(Item(date: "date", name: "name"))
+        items.append(Item(date: "date", name: randomName()))
     }
 
+}
+
+fileprivate let kNames = [
+    "Ekoocwood",
+    "Qaumery",
+    "Igaaginia",
+    "Agrauding",
+    "Odremont",
+    "Shona",
+    "Isrark",
+    "Ylalo",
+    "Gukrose",
+    "Qupholk"]
+
+fileprivate func randomName() -> String {
+    return kNames[Int(arc4random_uniform(UInt32(kNames.count)))];
 }
