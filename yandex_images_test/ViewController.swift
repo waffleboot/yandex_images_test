@@ -2,10 +2,11 @@
 import UIKit
 
 protocol ViewControllerModel {
-    var count: Int { get }
-    func clear()
-    func addImage()
-    func cellViewModel(forRowAt row: Int) -> CellView.Model
+    var cellsCount: Int { get }
+    func clickOnClearButton()
+    func clickOnAddButton()
+    func clickOnRow(_: Int);
+    func cellViewModel(forRowAt: Int) -> CellView.Model
 }
 
 class ViewController: UIViewController {
@@ -19,12 +20,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func addImage() {
-        model.addImage()
+        model.clickOnAddButton()
         tableView.reloadData()
     }
     
     @IBAction private func clear() {
-        model.clear()
+        model.clickOnClearButton()
         tableView.reloadData()
     }
 
@@ -33,7 +34,7 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.count
+        return model.cellsCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -42,4 +43,16 @@ extension ViewController: UITableViewDataSource {
         return cell
     }
 
+}
+
+extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        model.clickOnRow(indexPath.row)
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [indexPath], with: .fade)
+        tableView.endUpdates()
+    }
+    
 }

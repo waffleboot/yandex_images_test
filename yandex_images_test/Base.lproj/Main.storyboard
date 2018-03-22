@@ -66,6 +66,7 @@
                                         </prototypes>
                                         <connections>
                                             <outlet property="dataSource" destination="BYZ-38-t0r" id="3OU-Gj-gO1"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="67c-5s-r7W"/>
                                         </connections>
                                     </tableView>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="41b-sx-hPC">

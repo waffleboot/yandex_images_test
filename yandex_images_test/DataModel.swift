@@ -37,6 +37,10 @@ class DataModel {
         items.append(Item(date: "date", name: randomName()))
     }
 
+    func updateName(forRowAt row: Int) {
+        items[row].name = randomName()
+        DataStorage.save(items)
+    }
 }
 
 fileprivate let kNames = [

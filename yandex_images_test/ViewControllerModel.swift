@@ -9,16 +9,20 @@ class ViewControllerModelImpl: ViewControllerModel {
         self.dataModel = dataModel
     }
 
-    var count: Int {
+    var cellsCount: Int {
         return dataModel.items.count
     }
 
-    func clear() {
+    func clickOnClearButton() {
         dataModel.items = [Item]()
     }
 
-    func addImage() {
+    func clickOnAddButton() {
         dataModel.addImage()
+    }
+    
+    func clickOnRow(_ row: Int) {
+        dataModel.updateName(forRowAt: row)
     }
 
     func cellViewModel(forRowAt row: Int) -> CellView.Model {
