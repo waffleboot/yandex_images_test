@@ -11,6 +11,8 @@
 		F5A3DAC520631528009FAD8C /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3DAC420631528009FAD8C /* DataStorage.swift */; };
 		F5A3DAC7206317D9009FAD8C /* ViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3DAC6206317D9009FAD8C /* ViewControllerModel.swift */; };
 		F5A3DACB2063246D009FAD8C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3DACA2063246D009FAD8C /* DataModel.swift */; };
+		F5C898EB2063345400B0DEA8 /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C898EA2063345400B0DEA8 /* ImageDownloader.m */; };
+		F5C898EE2063ACDD00B0DEA8 /* Lifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C898ED2063ACDD00B0DEA8 /* Lifetime.swift */; };
 		F5CACCE32062F54F00B8E213 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CACCE22062F54F00B8E213 /* AppDelegate.swift */; };
 		F5CACCE52062F54F00B8E213 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CACCE42062F54F00B8E213 /* ViewController.swift */; };
 		F5CACCE82062F54F00B8E213 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5CACCE62062F54F00B8E213 /* Main.storyboard */; };
@@ -23,6 +25,10 @@
 		F5A3DAC420631528009FAD8C /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		F5A3DAC6206317D9009FAD8C /* ViewControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerModel.swift; sourceTree = "<group>"; };
 		F5A3DACA2063246D009FAD8C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		F5C898E82063345400B0DEA8 /* yandex_images_test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yandex_images_test-Bridging-Header.h"; sourceTree = "<group>"; };
+		F5C898E92063345400B0DEA8 /* ImageDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageDownloader.h; sourceTree = "<group>"; };
+		F5C898EA2063345400B0DEA8 /* ImageDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageDownloader.m; sourceTree = "<group>"; };
+		F5C898ED2063ACDD00B0DEA8 /* Lifetime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lifetime.swift; sourceTree = "<group>"; };
 		F5CACCDF2062F54F00B8E213 /* yandex_images_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yandex_images_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5CACCE22062F54F00B8E213 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5CACCE42062F54F00B8E213 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +78,10 @@
 				F5CACCE92062F54F00B8E213 /* Assets.xcassets */,
 				F5CACCEB2062F54F00B8E213 /* LaunchScreen.storyboard */,
 				F5CACCEE2062F54F00B8E213 /* Info.plist */,
+				F5C898E92063345400B0DEA8 /* ImageDownloader.h */,
+				F5C898EA2063345400B0DEA8 /* ImageDownloader.m */,
+				F5C898E82063345400B0DEA8 /* yandex_images_test-Bridging-Header.h */,
+				F5C898ED2063ACDD00B0DEA8 /* Lifetime.swift */,
 			);
 			path = yandex_images_test;
 			sourceTree = "<group>";
@@ -108,6 +118,7 @@
 				TargetAttributes = {
 					F5CACCDE2062F54F00B8E213 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -148,11 +159,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5C898EE2063ACDD00B0DEA8 /* Lifetime.swift in Sources */,
 				F5CACCE52062F54F00B8E213 /* ViewController.swift in Sources */,
 				F5CACCE32062F54F00B8E213 /* AppDelegate.swift in Sources */,
 				F5A3DAC12062FBC4009FAD8C /* CellView.swift in Sources */,
 				F5A3DAC7206317D9009FAD8C /* ViewControllerModel.swift in Sources */,
 				F5A3DACB2063246D009FAD8C /* DataModel.swift in Sources */,
+				F5C898EB2063345400B0DEA8 /* ImageDownloader.m in Sources */,
 				F5A3DAC520631528009FAD8C /* DataStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,6 +195,7 @@
 		F5CACCEF2062F54F00B8E213 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -211,6 +225,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -239,6 +254,7 @@
 		F5CACCF02062F54F00B8E213 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -268,6 +284,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -289,13 +306,17 @@
 		F5CACCF22062F54F00B8E213 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6Y4L3S6MKX;
 				INFOPLIST_FILE = yandex_images_test/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "yangand.yandex-images-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "yandex_images_test/yandex_images_test-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -304,13 +325,16 @@
 		F5CACCF32062F54F00B8E213 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6Y4L3S6MKX;
 				INFOPLIST_FILE = yandex_images_test/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "yangand.yandex-images-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "yandex_images_test/yandex_images_test-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

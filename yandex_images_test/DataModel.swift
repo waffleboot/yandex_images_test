@@ -2,7 +2,7 @@
 import Foundation
 
 class Item : NSObject, NSCoding {
-    var date: String!
+    @objc var date: String!
     var name: String!
     var image: Data?
     init(date: String, name: String) {
@@ -26,6 +26,10 @@ class Item : NSObject, NSCoding {
 }
 
 class DataModel {
+    
+    var updateViewModel: (() -> ())?
+
+    private let imageDownloader = ImageDownloader()
 
     var items: [Item] = DataStorage.load() {
         didSet {
@@ -38,9 +42,22 @@ class DataModel {
     }
 
     func updateName(forRowAt row: Int) {
-        items[row].name = randomName()
+        items[row].name = newNameInsteadOf(items[row].name)
         DataStorage.save(items)
     }
+    
+    private func newNameInsteadOf(_ oldname: String) -> String {
+        var newname: String
+        repeat {
+            newname = randomName()
+        } while (oldname != newname)
+        return newname
+    }
+    
+    func download(forItem item: Item) {
+        imageDownloader.downloadItem(item)
+    }
+
 }
 
 fileprivate let kNames = [

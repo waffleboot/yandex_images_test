@@ -3,10 +3,19 @@ import Foundation
 
 class ViewControllerModelImpl: ViewControllerModel {
     
-    private let dataModel: DataModel
+    var updateViewController: ((Signal) -> ())!
     
+    private let dataModel: DataModel
+
     init(_ dataModel: DataModel) {
         self.dataModel = dataModel
+        dataModel.updateViewModel = { [weak self] in
+            self?.updateViewController(.UpdateTable)
+        }
+    }
+    
+    deinit {
+        dataModel.updateViewModel = nil
     }
 
     var cellsCount: Int {
@@ -15,14 +24,17 @@ class ViewControllerModelImpl: ViewControllerModel {
 
     func clickOnClearButton() {
         dataModel.items = [Item]()
+        updateViewController(.UpdateTable)
     }
 
     func clickOnAddButton() {
         dataModel.addImage()
+        updateViewController(.UpdateTable)
     }
     
     func clickOnRow(_ row: Int) {
         dataModel.updateName(forRowAt: row)
+        updateViewController(.UpdateRow(row))
     }
 
     func cellViewModel(forRowAt row: Int) -> CellView.Model {
