@@ -18,7 +18,7 @@ class ViewControllerModelImpl: ViewControllerModel {
     }
 
     func addImage() {
-        dataModel.items.append(Item(date: "date", name: "name"))
+        dataModel.addImage()
     }
 
     func cellViewModel(forRowAt row: Int) -> CellView.Model {
@@ -31,5 +31,6 @@ extension CellView.Model {
     init(item: Item) {
         date = item.date
         name = item.name
+        imageData = item.image
     }
 }

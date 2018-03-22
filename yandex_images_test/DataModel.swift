@@ -4,6 +4,7 @@ import Foundation
 class Item : NSObject, NSCoding {
     var date: String!
     var name: String!
+    var image: Data?
     init(date: String, name: String) {
         super.init()
         self.date = date
@@ -11,12 +12,16 @@ class Item : NSObject, NSCoding {
     }
     required init?(coder aDecoder: NSCoder) {
         super.init()
-        self.date = aDecoder.decodeObject(forKey: "date") as! String
-        self.name = aDecoder.decodeObject(forKey: "name") as! String
+        date = aDecoder.decodeObject(forKey: "date") as! String
+        name = aDecoder.decodeObject(forKey: "name") as! String
+        if let imageData = aDecoder.decodeObject(forKey: "image") as? Data {
+            self.image = imageData
+        }
     }
     func encode(with aCoder: NSCoder) {
         aCoder.encode(date, forKey: "date")
         aCoder.encode(name, forKey: "name")
+        aCoder.encode(image, forKey: "image")
     }
 }
 
@@ -26,6 +31,10 @@ class DataModel {
         didSet {
             DataStorage.save(items)
         }
+    }
+
+    func addImage() {
+        items.append(Item(date: "date", name: "name"))
     }
 
 }
