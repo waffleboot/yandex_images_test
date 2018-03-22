@@ -14,7 +14,7 @@
                if (!error) {
                    Item* item = weakItem;
                    if (item) {
-                       item.data = nil;
+//                       item.data = nil;
                    }
                }
     }];

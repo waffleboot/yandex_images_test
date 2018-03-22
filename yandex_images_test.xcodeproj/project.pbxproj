@@ -12,7 +12,6 @@
 		F5A3DAC7206317D9009FAD8C /* ViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3DAC6206317D9009FAD8C /* ViewControllerModel.swift */; };
 		F5A3DACB2063246D009FAD8C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3DACA2063246D009FAD8C /* DataModel.swift */; };
 		F5C898EB2063345400B0DEA8 /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C898EA2063345400B0DEA8 /* ImageDownloader.m */; };
-		F5C898EE2063ACDD00B0DEA8 /* Lifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C898ED2063ACDD00B0DEA8 /* Lifetime.swift */; };
 		F5CACCE32062F54F00B8E213 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CACCE22062F54F00B8E213 /* AppDelegate.swift */; };
 		F5CACCE52062F54F00B8E213 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CACCE42062F54F00B8E213 /* ViewController.swift */; };
 		F5CACCE82062F54F00B8E213 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5CACCE62062F54F00B8E213 /* Main.storyboard */; };
@@ -28,7 +27,6 @@
 		F5C898E82063345400B0DEA8 /* yandex_images_test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yandex_images_test-Bridging-Header.h"; sourceTree = "<group>"; };
 		F5C898E92063345400B0DEA8 /* ImageDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageDownloader.h; sourceTree = "<group>"; };
 		F5C898EA2063345400B0DEA8 /* ImageDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageDownloader.m; sourceTree = "<group>"; };
-		F5C898ED2063ACDD00B0DEA8 /* Lifetime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lifetime.swift; sourceTree = "<group>"; };
 		F5CACCDF2062F54F00B8E213 /* yandex_images_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yandex_images_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5CACCE22062F54F00B8E213 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5CACCE42062F54F00B8E213 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +47,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F5C898F020644FAC00B0DEA8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F5A3DAC02062FBC4009FAD8C /* CellView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F5C898F120644FBF00B0DEA8 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F5CACCE42062F54F00B8E213 /* ViewController.swift */,
+				F5A3DAC6206317D9009FAD8C /* ViewControllerModel.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F5C898F220644FF300B0DEA8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F5A3DACA2063246D009FAD8C /* DataModel.swift */,
+				F5A3DAC420631528009FAD8C /* DataStorage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F5CACCD62062F54E00B8E213 = {
 			isa = PBXGroup;
 			children = (
@@ -68,12 +92,10 @@
 		F5CACCE12062F54F00B8E213 /* yandex_images_test */ = {
 			isa = PBXGroup;
 			children = (
-				F5A3DACA2063246D009FAD8C /* DataModel.swift */,
-				F5A3DAC02062FBC4009FAD8C /* CellView.swift */,
+				F5C898F020644FAC00B0DEA8 /* Views */,
+				F5C898F120644FBF00B0DEA8 /* ViewControllers */,
+				F5C898F220644FF300B0DEA8 /* Models */,
 				F5CACCE22062F54F00B8E213 /* AppDelegate.swift */,
-				F5CACCE42062F54F00B8E213 /* ViewController.swift */,
-				F5A3DAC6206317D9009FAD8C /* ViewControllerModel.swift */,
-				F5A3DAC420631528009FAD8C /* DataStorage.swift */,
 				F5CACCE62062F54F00B8E213 /* Main.storyboard */,
 				F5CACCE92062F54F00B8E213 /* Assets.xcassets */,
 				F5CACCEB2062F54F00B8E213 /* LaunchScreen.storyboard */,
@@ -81,7 +103,6 @@
 				F5C898E92063345400B0DEA8 /* ImageDownloader.h */,
 				F5C898EA2063345400B0DEA8 /* ImageDownloader.m */,
 				F5C898E82063345400B0DEA8 /* yandex_images_test-Bridging-Header.h */,
-				F5C898ED2063ACDD00B0DEA8 /* Lifetime.swift */,
 			);
 			path = yandex_images_test;
 			sourceTree = "<group>";
@@ -159,7 +180,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5C898EE2063ACDD00B0DEA8 /* Lifetime.swift in Sources */,
 				F5CACCE52062F54F00B8E213 /* ViewController.swift in Sources */,
 				F5CACCE32062F54F00B8E213 /* AppDelegate.swift in Sources */,
 				F5A3DAC12062FBC4009FAD8C /* CellView.swift in Sources */,

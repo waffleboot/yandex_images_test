@@ -1,18 +1,18 @@
 
 import UIKit
 
-enum Signal {
-    case UpdateTable
-    case UpdateRow(Int)
-}
-
 protocol ViewControllerModel {
     var cellsCount: Int { get }
-    var updateViewController: ((Signal) -> ())! { get set }
     func clickOnRow(_: Int);
     func clickOnAddButton()
     func clickOnClearButton()
     func cellViewModel(forRowAt: Int) -> CellView.Model
+    weak var delegate: ViewControllerDelegate! { get set }
+}
+
+protocol ViewControllerDelegate : class {
+    func updateTable()
+    func updateRow(_: Int)
 }
 
 class ViewController: UIViewController {
@@ -21,20 +21,7 @@ class ViewController: UIViewController {
     
     var model: ViewControllerModel! {
         didSet {
-            model.updateViewController = { [weak self] in
-                self?.updateViewController($0)
-            }
-        }
-    }
-    
-    private func updateViewController(_ signal: Signal) {
-        switch signal {
-        case .UpdateTable:
-            tableView.reloadData()
-        case .UpdateRow(let row):
-            tableView.beginUpdates()
-            tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .fade)
-            tableView.endUpdates()
+            model.delegate = self
         }
     }
     
@@ -48,6 +35,20 @@ class ViewController: UIViewController {
     
     @IBAction private func addImage() {
         model.clickOnAddButton()
+    }
+    
+}
+
+extension ViewController: ViewControllerDelegate {
+    
+    func updateTable() {
+        tableView.reloadData()
+    }
+    
+    func updateRow(_ row: Int) {
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .fade)
+        tableView.endUpdates()
     }
     
 }

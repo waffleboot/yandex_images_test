@@ -3,44 +3,46 @@ import Foundation
 
 class ViewControllerModelImpl: ViewControllerModel {
     
-    var updateViewController: ((Signal) -> ())!
+    weak var delegate: ViewControllerDelegate!
     
     private let dataModel: DataModel
 
     init(_ dataModel: DataModel) {
         self.dataModel = dataModel
-        dataModel.updateViewModel = { [weak self] in
-            self?.updateViewController(.UpdateTable)
-        }
+        self.dataModel.delegate = self
     }
     
-    deinit {
-        dataModel.updateViewModel = nil
-    }
-
     var cellsCount: Int {
         return dataModel.items.count
     }
 
     func clickOnClearButton() {
         dataModel.items = [Item]()
-        updateViewController(.UpdateTable)
+        delegate.updateTable()
     }
 
     func clickOnAddButton() {
         dataModel.addImage()
-        updateViewController(.UpdateTable)
+        delegate.updateTable()
     }
     
     func clickOnRow(_ row: Int) {
         dataModel.updateName(forRowAt: row)
-        updateViewController(.UpdateRow(row))
+        delegate.updateRow(row)
     }
 
     func cellViewModel(forRowAt row: Int) -> CellView.Model {
         return CellView.Model(item: dataModel.items[row])
     }
 
+}
+
+extension ViewControllerModelImpl : DataModelDelegate {
+
+    func updateViewModel() {
+        delegate.updateTable()
+    }
+    
 }
 
 extension CellView.Model {

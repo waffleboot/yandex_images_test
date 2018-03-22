@@ -25,9 +25,13 @@ class Item : NSObject, NSCoding {
     }
 }
 
+protocol DataModelDelegate : class {
+    func updateViewModel()
+}
+
 class DataModel {
     
-    var updateViewModel: (() -> ())?
+    weak var delegate: DataModelDelegate?
 
     private let imageDownloader = ImageDownloader()
 
@@ -50,7 +54,7 @@ class DataModel {
         var newname: String
         repeat {
             newname = randomName()
-        } while (oldname != newname)
+        } while (oldname == newname)
         return newname
     }
     
