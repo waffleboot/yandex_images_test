@@ -5,7 +5,9 @@
 @class ImageSource;
 
 @protocol ImageSourceDelegate
-- (void)imageSource:(ImageSource * _Nonnull)imageSource didUpdateItem:(Item * _Nonnull)item withImageData:(NSData * _Nonnull)imageData;
+- (void)imageSource:(ImageSource * _Nonnull)imageSource
+      didUpdateItem:(Item * _Nonnull)item
+      withImageData:(NSData * _Nonnull)imageData;
 @end
 
 @interface ImageSource : NSObject
