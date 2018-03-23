@@ -77,9 +77,9 @@ class DataModel {
 extension DataModel : ImageSourceDelegate {
     
     func imageSource(_ imageSource: ImageSource, didUpdate item: Item, withImageData imageData: Data) {
-        item.image = imageData;
-        DataStorage.save(items)
         OperationQueue.main.addOperation {
+            item.image = imageData;
+            DataStorage.save(self.items)
             self.delegate?.updateViewModelWithItem(item)
         }
     }
