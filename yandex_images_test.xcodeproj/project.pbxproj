@@ -71,6 +71,8 @@
 			children = (
 				F5A3DACA2063246D009FAD8C /* DataModel.swift */,
 				F5A3DAC420631528009FAD8C /* DataStorage.swift */,
+				F5C898E92063345400B0DEA8 /* ImageSource.h */,
+				F5C898EA2063345400B0DEA8 /* ImageSource.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -103,8 +105,6 @@
 				F5CACCE92062F54F00B8E213 /* Assets.xcassets */,
 				F5CACCEB2062F54F00B8E213 /* LaunchScreen.storyboard */,
 				F5CACCEE2062F54F00B8E213 /* Info.plist */,
-				F5C898E92063345400B0DEA8 /* ImageSource.h */,
-				F5C898EA2063345400B0DEA8 /* ImageSource.m */,
 				F5C898E82063345400B0DEA8 /* yandex_images_test-Bridging-Header.h */,
 			);
 			path = yandex_images_test;
