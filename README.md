@@ -7,7 +7,7 @@ UITableViewCell, модель ячейки, допкэш на 1MB, чтобы н
 
 * ViewController.swift
 
-VC, держит таблицу, UI тягает с Main.storyboard
+VC, держит таблицу, UI тягает с Main.storyboard (внутри UIStackView, cell height жестко заданы)
 Содержит мутный кусок кода для скроллинга таблицы на последнюю добавленную ячейку: сначала добавляется пустая ячейка, на нее делается move (без аниманции все), потом эта новая ячейка анимируется через fade in reload
 
 * ViewControllerModel.swift
