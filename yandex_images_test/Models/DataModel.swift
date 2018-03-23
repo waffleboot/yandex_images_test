@@ -6,7 +6,7 @@ class Item : NSObject, NSCoding {
     class Token : NSObject { }
 
     var date: Date!
-    @objc var name: String!
+    var name: String!
     var image: Data?
     @objc let token = Token()
     init(date: Date, name: String) {

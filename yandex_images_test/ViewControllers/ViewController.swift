@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     
     private var newRow: Int?
     
+    private let imagesCache = NSCache<Item.Token,UIImage>()
+    
     @IBAction private func clear() {
         model.clickOnClearButton()
     }
@@ -21,10 +23,14 @@ class ViewController: UIViewController {
         model.clickOnAddButton()
     }
     
+    override func didReceiveMemoryWarning() {
+        CellView.imagesCache.removeAllObjects()
+    }
+    
 }
 
 extension ViewController: ViewControllerModelDelegate {
-
+    
     func addRow(_ row: Int) {
         newRow = row
         tableView.beginUpdates()

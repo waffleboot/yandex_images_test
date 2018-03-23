@@ -53,7 +53,7 @@ class ViewControllerModelImpl: ViewControllerModel {
         if item.image == nil {
             dataModel.needImageForItem(item)
         }
-        return CellView.ViewModel(date: date, name: item.name, imageData: item.image)
+        return CellView.ViewModel(date: date, name: item.name, imageData: item.image, token: item.token)
     }
     
 }

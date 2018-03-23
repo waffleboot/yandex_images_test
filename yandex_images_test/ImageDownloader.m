@@ -2,7 +2,6 @@
 #import "ImageDownloader.h"
 #import "yandex_images_test-Swift.h"
 
-static NSTimeInterval kRetryTimeout = 5;
 static NSTimeInterval kLongRunningTaskTimeout = 300;
 
 @interface ImageSource ()
@@ -46,13 +45,11 @@ static NSTimeInterval kLongRunningTaskTimeout = 300;
     self.activeItem = nil;
     [self.lock unlock];
     if (item) {
-        NSLog(@"enqueue again [%@]", item.name);
         [self enqueueItem:item];
     }
 }
 
 - (void)runHttpRequestForItem:(Item *)item {
-    NSLog(@"run [%@]", item.name);
     self.activeItem = item;
     self.activeItemStartTime = [NSDate date];
     Token *token = item.token;
@@ -66,7 +63,6 @@ static NSTimeInterval kLongRunningTaskTimeout = 300;
                                 [self.tokens removeObject:token];
                                 Item *strongItem = weakItem;
                                 if (!error && strongItem) {
-                                    NSLog(@"ready [%@]", strongItem.name);
                                     [self updateItem:strongItem withImage:data];
                                 }
                             }];
@@ -76,7 +72,6 @@ static NSTimeInterval kLongRunningTaskTimeout = 300;
 - (void)downloadImageForItem:(Item *)item {
     [self.lock lock];
     while (self.activeItem) {
-        NSLog(@"wait [%@]", item.name);
         if (![self.lock waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:kLongRunningTaskTimeout]]) {
             [self.lock unlock];
             [self enqueueItem:item];
