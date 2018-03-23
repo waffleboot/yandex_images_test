@@ -1,11 +1,10 @@
 
 import Foundation
-import UIKit
 
 class Item : NSObject, NSCoding {
     var date: Date!
     var name: String!
-    var image: Data?
+    @objc var image: Data?
     init(date: Date, name: String) {
         super.init()
         self.date = date
@@ -52,7 +51,7 @@ class DataModel {
 
     func addImage() {
         let item = Item(date: Date(), name: randomName())
-        item.image = UIImagePNGRepresentation(UIImage(named: "nature")!)
+        imageDownloader.downloadItem(item)
         items.append(item)
     }
 
