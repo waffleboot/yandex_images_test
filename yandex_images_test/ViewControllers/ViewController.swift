@@ -13,8 +13,6 @@ class ViewController: UIViewController {
     
     private var newRow: Int?
     
-    private let imagesCache = NSCache<Item.Token,UIImage>()
-    
     @IBAction private func clear() {
         model.clickOnClearButton()
     }

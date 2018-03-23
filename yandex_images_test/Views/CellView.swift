@@ -3,12 +3,10 @@ import UIKit
 
 class CellView: UITableViewCell {
     
-    static let imagesCache: NSCache<Item.Token,UIImage> = {
-        let cache = NSCache<Item.Token,UIImage>()
-        cache.totalCostLimit = 1024*1024;
-        return cache
-    }()
-    
+    @IBOutlet var siteImage: UIImageView!
+    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var nameLabel: UILabel!
+
     struct ViewModel {
         let date: String
         let name: String
@@ -29,10 +27,6 @@ class CellView: UITableViewCell {
         nameLabel.text = viewModel.name
     }
 
-    @IBOutlet var siteImage: UIImageView!
-    @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var nameLabel: UILabel!
-    
     override func prepareForReuse() {
         // view controller creates new rows with no content and updates new cells after scrolling
         // so don't forget to clear dequeued row
@@ -43,3 +37,12 @@ class CellView: UITableViewCell {
     
 }
 
+extension CellView {
+
+    static let imagesCache: NSCache<Item.Token,UIImage> = {
+        let cache = NSCache<Item.Token,UIImage>()
+        cache.totalCostLimit = 1024*1024;
+        return cache
+    }()
+
+}
