@@ -1,5 +1,5 @@
 
-#import "ImageDownloader.h"
+#import "ImageSource.h"
 #import "yandex_images_test-Swift.h"
 
 static NSTimeInterval kLongRunningTaskTimeout = 300;
