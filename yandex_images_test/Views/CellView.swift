@@ -12,18 +12,25 @@ class CellView: UITableViewCell {
     var viewModel : Model! {
         didSet {
             if let imageData = viewModel.imageData {
-                siteImage?.image = UIImage(data: imageData)
+                siteImage.image = UIImage(data: imageData)
             } else {
-                siteImage?.image = nil
+                siteImage.image = nil
             }
             dateLabel.text = viewModel.date
             nameLabel.text = viewModel.name
         }
     }
     
-    @IBOutlet private var siteImage: UIImageView?
+    @IBOutlet var siteImage: UIImageView!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!
+    
+    override func prepareForReuse() {
+        siteImage.image = nil
+        dateLabel.text = nil
+        nameLabel.text = nil
+        
+    }
 
 }
 

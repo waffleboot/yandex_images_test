@@ -23,7 +23,7 @@ class ViewControllerModelImpl: ViewControllerModel {
 
     func clickOnAddButton() {
         dataModel.addImage()
-        delegate.updateTable()
+        delegate.addRow(dataModel.items.count-1)
     }
     
     func clickOnRow(_ row: Int) {
