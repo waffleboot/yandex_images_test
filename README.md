@@ -31,3 +31,5 @@ DataModel хранит массив Item, дергает ImageSource если н
 * ImageSource.h/.m
 
 ObjC загрузка изображении: асинхронно по отношению к main thread, последовательно по отношению друг к другу (через NSCondition): загрузка не начнется пока не исполнится прежний запрос. Item все в ImageSource работают через weak-ссылки, так что для удаленных Item загрузок не будет. Чтобы не дублировать запросы по одному и тому же Item используется Token.
+
+![screenshot](https://github.com/waffleboot/yandex_images_test/blob/master/yandex_images_test.png)
