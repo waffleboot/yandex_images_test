@@ -1,8 +1,9 @@
 
 import Foundation
+import UIKit
 
 class Item : NSObject, NSCoding {
-    @objc var date: Date!
+    var date: Date!
     var name: String!
     var image: Data?
     init(date: Date, name: String) {
@@ -50,7 +51,9 @@ class DataModel {
     }
 
     func addImage() {
-        items.append(Item(date: Date(), name: randomName()))
+        let item = Item(date: Date(), name: randomName())
+        item.image = UIImagePNGRepresentation(UIImage(named: "nature")!)
+        items.append(item)
     }
 
     func updateName(forRowAt row: Int) {

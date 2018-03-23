@@ -29,7 +29,6 @@ class CellView: UITableViewCell {
         siteImage.image = nil
         dateLabel.text = nil
         nameLabel.text = nil
-        
     }
 
 }
