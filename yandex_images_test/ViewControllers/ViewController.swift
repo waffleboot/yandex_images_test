@@ -1,21 +1,6 @@
 
 import UIKit
 
-protocol ViewControllerModel {
-    var cellsCount: Int { get }
-    func clickOnRow(_: Int);
-    func clickOnAddButton()
-    func clickOnClearButton()
-    func cellViewModel(forRowAt: Int) -> CellView.Model
-    weak var delegate: ViewControllerDelegate! { get set }
-}
-
-protocol ViewControllerDelegate : class {
-    func updateTable()
-    func addRow(_: Int)
-    func updateRow(_: Int)
-}
-
 class ViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
@@ -28,10 +13,6 @@ class ViewController: UIViewController {
     
     private var newRow: Int?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     @IBAction private func clear() {
         model.clickOnClearButton()
     }
@@ -42,8 +23,8 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController: ViewControllerDelegate {
-    
+extension ViewController: ViewControllerModelDelegate {
+
     func addRow(_ row: Int) {
         newRow = row
         tableView.beginUpdates()
@@ -52,7 +33,9 @@ extension ViewController: ViewControllerDelegate {
         }
         tableView.insertRows(at: [IndexPath(row: row, section: 0)], with: .none)
         tableView.endUpdates()
+
         tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: .bottom, animated: false)
+
         newRow = nil
         tableView.beginUpdates()
         tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .fade)
@@ -69,12 +52,16 @@ extension ViewController: ViewControllerDelegate {
         tableView.endUpdates()
     }
     
+    func visibleRows() -> [Int]? {
+        return tableView.indexPathsForVisibleRows?.map { $0.row }
+    }
+    
 }
 
 extension ViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        if model.cellsCount > 0 {
+        if model.rowsCount > 0 {
             tableView.separatorStyle = .singleLine
             tableView.backgroundView = nil
             return 1
@@ -90,7 +77,7 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.cellsCount
+        return model.rowsCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -2,9 +2,13 @@
 import Foundation
 
 class Item : NSObject, NSCoding {
+    
+    class Token : NSObject { }
+
     var date: Date!
-    var name: String!
-    @objc var image: Data?
+    @objc var name: String!
+    var image: Data?
+    @objc let token = Token()
     init(date: Date, name: String) {
         super.init()
         self.date = date
@@ -26,32 +30,28 @@ class Item : NSObject, NSCoding {
 }
 
 protocol DataModelDelegate : class {
-    func updateViewModel()
+    func updateViewModelWithItem(_:Item)
 }
 
 class DataModel {
 
-    let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
-        return dateFormatter
-    }()
-    
     weak var delegate: DataModelDelegate?
     
-    private let imageDownloader = ImageDownloader()
-    
+    private let imageSource = ImageSource()
+
+    init() {
+        imageSource.delegate = self
+    }
+
     var items: [Item] = DataStorage.load() {
         didSet {
             DataStorage.save(items)
         }
     }
 
-    func addImage() {
+    func addItem() {
         let item = Item(date: Date(), name: randomName())
-        imageDownloader.downloadItem(item)
+        needImageForItem(item)
         items.append(item)
     }
 
@@ -60,18 +60,30 @@ class DataModel {
         DataStorage.save(items)
     }
     
-    private func newNameInsteadOf(_ oldname: String) -> String {
-        var newname: String
-        repeat {
-            newname = randomName()
-        } while (oldname == newname)
-        return newname
+    func needImageForItem(_ item: Item) {
+        imageSource.updateImage(for: item);
     }
     
-    func download(forItem item: Item) {
-        imageDownloader.downloadItem(item)
-    }
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
+        return dateFormatter
+    }()
 
+}
+
+extension DataModel : ImageSourceDelegate {
+    
+    func imageSource(_ imageSource: ImageSource, didUpdate item: Item, withImageData imageData: Data) {
+        item.image = imageData;
+        DataStorage.save(items)
+        OperationQueue.main.addOperation {
+            self.delegate?.updateViewModelWithItem(item)
+        }
+    }
+    
 }
 
 fileprivate let kNames = [
@@ -88,4 +100,12 @@ fileprivate let kNames = [
 
 fileprivate func randomName() -> String {
     return kNames[Int(arc4random_uniform(UInt32(kNames.count)))];
+}
+
+fileprivate func newNameInsteadOf(_ oldname: String) -> String {
+    var newname: String
+    repeat {
+        newname = randomName()
+    } while (oldname == newname)
+    return newname
 }

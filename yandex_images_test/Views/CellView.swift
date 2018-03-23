@@ -3,13 +3,13 @@ import UIKit
 
 class CellView: UITableViewCell {
 
-    struct Model {
+    struct ViewModel {
         let date: String
         let name: String
         let imageData: Data?
     }
 
-    var viewModel : Model! {
+    var viewModel : ViewModel! {
         didSet {
             if let imageData = viewModel.imageData {
                 siteImage.image = UIImage(data: imageData)

@@ -1,9 +1,25 @@
 
 import Foundation
 
+protocol ViewControllerModel {
+    var rowsCount: Int { get }
+    func clickOnRow(_: Int);
+    func clickOnAddButton()
+    func clickOnClearButton()
+    func cellViewModel(forRowAt: Int) -> CellView.ViewModel
+    weak var delegate: ViewControllerModelDelegate! { get set }
+}
+
+protocol ViewControllerModelDelegate : class {
+    func updateTable()
+    func addRow(_: Int)
+    func updateRow(_: Int)
+    func visibleRows() -> [Int]?
+}
+
 class ViewControllerModelImpl: ViewControllerModel {
     
-    weak var delegate: ViewControllerDelegate!
+    weak var delegate: ViewControllerModelDelegate!
     
     private let dataModel: DataModel
 
@@ -12,7 +28,7 @@ class ViewControllerModelImpl: ViewControllerModel {
         self.dataModel.delegate = self
     }
     
-    var cellsCount: Int {
+    var rowsCount: Int {
         return dataModel.items.count
     }
 
@@ -22,7 +38,7 @@ class ViewControllerModelImpl: ViewControllerModel {
     }
 
     func clickOnAddButton() {
-        dataModel.addImage()
+        dataModel.addItem()
         delegate.addRow(dataModel.items.count-1)
     }
     
@@ -31,18 +47,24 @@ class ViewControllerModelImpl: ViewControllerModel {
         delegate.updateRow(row)
     }
 
-    func cellViewModel(forRowAt row: Int) -> CellView.Model {
+    func cellViewModel(forRowAt row: Int) -> CellView.ViewModel {
         let item = dataModel.items[row]
         let date = dataModel.dateFormatter.string(from: item.date)
-        return CellView.Model(date: date, name: item.name, imageData: item.image)
+        if item.image == nil {
+            dataModel.needImageForItem(item)
+        }
+        return CellView.ViewModel(date: date, name: item.name, imageData: item.image)
     }
-
+    
 }
 
 extension ViewControllerModelImpl : DataModelDelegate {
 
-    func updateViewModel() {
-        delegate.updateTable()
+    func updateViewModelWithItem(_ item: Item) {
+        guard let row = delegate.visibleRows()?.first(where: {
+            dataModel.items[$0] == item
+        }) else { return }
+        delegate.updateRow(row)
     }
     
 }
