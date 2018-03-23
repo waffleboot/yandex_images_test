@@ -10,5 +10,5 @@
 
 @interface ImageSource : NSObject
 @property (nonatomic) id<ImageSourceDelegate> _Nonnull delegate;
-- (void)updateImageForItem:(Item * _Nonnull)item;
+- (void)getImageForItem:(Item * _Nonnull)item;
 @end

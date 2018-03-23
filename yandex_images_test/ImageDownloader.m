@@ -34,53 +34,11 @@ static NSTimeInterval kLongRunningTaskTimeout = 300;
     return self;
 }
 
-- (void)updateItem:(Item *)item withImage:(NSData *)data {
-    [self.delegate imageSource:self didUpdateItem:item withImageData:data];
-}
-
-- (void)cancelLongRunningTask {
-    [self.task cancel];
-    [self.lock lock];
-    Item *item = self.activeItem;
-    self.activeItem = nil;
-    [self.lock unlock];
-    if (item) {
+- (void)getImageForItem:(Item *)item {
+    if (![self.tokens containsObject:item.token]) {
+        [self.tokens addObject:item.token];
         [self enqueueItem:item];
     }
-}
-
-- (void)runHttpRequestForItem:(Item *)item {
-    self.activeItem = item;
-    self.activeItemStartTime = [NSDate date];
-    Token *token = item.token;
-    __weak Item *weakItem = item;
-    self.task = [self.session dataTaskWithURL:self.url
-                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                [self.lock lock];
-                                self.activeItem = nil;
-                                [self.lock signal];
-                                [self.lock unlock];
-                                [self.tokens removeObject:token];
-                                Item *strongItem = weakItem;
-                                if (!error && strongItem) {
-                                    [self updateItem:strongItem withImage:data];
-                                }
-                            }];
-    [self.task resume];
-}
-
-- (void)downloadImageForItem:(Item *)item {
-    [self.lock lock];
-    while (self.activeItem) {
-        if (![self.lock waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:kLongRunningTaskTimeout]]) {
-            [self.lock unlock];
-            [self enqueueItem:item];
-            [self cancelLongRunningTask];
-            return;
-        }
-    }
-    [self runHttpRequestForItem:item];
-    [self.lock unlock];
 }
 
 - (void)enqueueItem:(Item *)item {
@@ -96,11 +54,63 @@ static NSTimeInterval kLongRunningTaskTimeout = 300;
     }];
 }
 
-- (void)updateImageForItem:(Item *)item {
-    if (![self.tokens containsObject:item.token]) {
-        [self.tokens addObject:item.token];
+- (BOOL)tryHttpLock {
+    [self.lock lock];
+    while (self.activeItem) {
+        if (![self.lock waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:kLongRunningTaskTimeout]]) {
+            [self.lock unlock];
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (Item*)unlockHttpLock {
+    [self.lock lock];
+    Item *item = self.activeItem;
+    self.activeItem = nil;
+    [self.lock signal]; // for waitUntilDone
+    [self.lock unlock];
+    return item;
+}
+
+- (void)downloadImageForItem:(Item *)item {
+    if (![self tryHttpLock]) {
+        [self enqueueItem:item];
+        [self restartLongRunningTask];
+        return;
+    }
+    [self runHttpRequestForItem:item];
+    [self.lock unlock];
+}
+
+- (void)runHttpRequestForItem:(Item *)item {
+    self.activeItem = item;
+    self.activeItemStartTime = [NSDate date];
+    Token *token = item.token;
+    __weak Item *weakItem = item;
+    self.task = [self.session dataTaskWithURL:self.url
+                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                [self unlockHttpLock];
+                                [self.tokens removeObject:token];
+                                Item *strongItem = weakItem;
+                                if (!error && strongItem) {
+                                    [self updateItem:strongItem withImage:data];
+                                }
+                            }];
+    [self.task resume];
+}
+
+- (void)restartLongRunningTask {
+    [self.task cancel];
+    Item *item = [self unlockHttpLock];
+    if (item) {
         [self enqueueItem:item];
     }
+}
+
+- (void)updateItem:(Item *)item withImage:(NSData *)data {
+    [self.delegate imageSource:self didUpdateItem:item withImageData:data];
 }
 
 @end

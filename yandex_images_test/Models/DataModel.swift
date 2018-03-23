@@ -61,7 +61,7 @@ class DataModel {
     }
     
     func needImageForItem(_ item: Item) {
-        imageSource.updateImage(for: item);
+        imageSource.getImageFor(item)
     }
     
     let dateFormatter: DateFormatter = {

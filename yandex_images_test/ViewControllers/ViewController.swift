@@ -32,6 +32,9 @@ class ViewController: UIViewController {
 extension ViewController: ViewControllerModelDelegate {
     
     func addRow(_ row: Int) {
+        
+        // to fade in new row after scrolling: add as empty row, scroll to new row, reload with valid content
+        
         newRow = row
         tableView.beginUpdates()
         if row == 0 {
@@ -89,7 +92,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellView", for: indexPath) as! CellView
         if let newRow = self.newRow, indexPath.row == newRow { } else {
-            cell.viewModel = model.cellViewModel(forRowAt: indexPath.row)
+            cell.configure(model.cellViewModel(forRowAt: indexPath.row))
         }
         return cell
     }
