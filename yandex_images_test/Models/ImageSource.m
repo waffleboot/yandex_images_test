@@ -5,8 +5,7 @@
 static NSTimeInterval kLongRunningTaskTimeout = 300;
 
 @interface ImageSource ()
-@property (atomic, weak) Item *activeItem;
-@property (nonatomic) NSDate *activeItemStartTime;
+@property (atomic) BOOL locked;
 @property (nonatomic) NSCondition *lock;
 @property (nonatomic) NSURLSessionDataTask *task;
 @property (nonatomic) NSMutableSet<Token *> *tokens;
@@ -56,22 +55,21 @@ static NSTimeInterval kLongRunningTaskTimeout = 300;
 
 - (BOOL)tryHttpLock {
     [self.lock lock];
-    while (self.activeItem) {
+    while (self.locked) {
         if (![self.lock waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:kLongRunningTaskTimeout]]) {
             [self.lock unlock];
             return NO;
         }
     }
+    self.locked = YES;
     return YES;
 }
 
-- (Item*)unlockHttpLock {
+- (void)unlockHttpLock {
     [self.lock lock];
-    Item *item = self.activeItem;
-    self.activeItem = nil;
+    self.locked = NO;
     [self.lock signal]; // for waitUntilDone
     [self.lock unlock];
-    return item;
 }
 
 - (void)downloadImageForItem:(Item *)item {
@@ -85,8 +83,6 @@ static NSTimeInterval kLongRunningTaskTimeout = 300;
 }
 
 - (void)runHttpRequestForItem:(Item *)item {
-    self.activeItem = item;
-    self.activeItemStartTime = [NSDate date];
     Token *token = item.token;
     __weak Item *weakItem = item;
     self.task = [self.session dataTaskWithURL:self.url
@@ -103,10 +99,7 @@ static NSTimeInterval kLongRunningTaskTimeout = 300;
 
 - (void)restartLongRunningTask {
     [self.task cancel];
-    Item *item = [self unlockHttpLock];
-    if (item) {
-        [self enqueueItem:item];
-    }
+    [self unlockHttpLock];
 }
 
 - (void)updateItem:(Item *)item withImage:(NSData *)data {
