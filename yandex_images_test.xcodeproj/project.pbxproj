@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F56A3C6520717F95007EE070 /* CellViewConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56A3C6420717F95007EE070 /* CellViewConfigurator.swift */; };
 		F5A3DAC12062FBC4009FAD8C /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3DAC02062FBC4009FAD8C /* CellView.swift */; };
 		F5A3DAC520631528009FAD8C /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3DAC420631528009FAD8C /* DataStorage.swift */; };
-		F5A3DAC7206317D9009FAD8C /* ViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3DAC6206317D9009FAD8C /* ViewControllerModel.swift */; };
 		F5A3DACB2063246D009FAD8C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3DACA2063246D009FAD8C /* DataModel.swift */; };
 		F5C898EB2063345400B0DEA8 /* ImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C898EA2063345400B0DEA8 /* ImageSource.m */; };
 		F5C898F42065922700B0DEA8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F5C898F32065922700B0DEA8 /* README.md */; };
@@ -21,9 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F56A3C6420717F95007EE070 /* CellViewConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewConfigurator.swift; sourceTree = "<group>"; };
 		F5A3DAC02062FBC4009FAD8C /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		F5A3DAC420631528009FAD8C /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
-		F5A3DAC6206317D9009FAD8C /* ViewControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerModel.swift; sourceTree = "<group>"; };
 		F5A3DACA2063246D009FAD8C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		F5C898E82063345400B0DEA8 /* yandex_images_test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yandex_images_test-Bridging-Header.h"; sourceTree = "<group>"; };
 		F5C898E92063345400B0DEA8 /* ImageSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageSource.h; sourceTree = "<group>"; };
@@ -53,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				F5A3DAC02062FBC4009FAD8C /* CellView.swift */,
+				F56A3C6420717F95007EE070 /* CellViewConfigurator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -61,7 +62,6 @@
 			isa = PBXGroup;
 			children = (
 				F5CACCE42062F54F00B8E213 /* ViewController.swift */,
-				F5A3DAC6206317D9009FAD8C /* ViewControllerModel.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -187,7 +187,7 @@
 				F5CACCE52062F54F00B8E213 /* ViewController.swift in Sources */,
 				F5CACCE32062F54F00B8E213 /* AppDelegate.swift in Sources */,
 				F5A3DAC12062FBC4009FAD8C /* CellView.swift in Sources */,
-				F5A3DAC7206317D9009FAD8C /* ViewControllerModel.swift in Sources */,
+				F56A3C6520717F95007EE070 /* CellViewConfigurator.swift in Sources */,
 				F5A3DACB2063246D009FAD8C /* DataModel.swift in Sources */,
 				F5C898EB2063345400B0DEA8 /* ImageSource.m in Sources */,
 				F5A3DAC520631528009FAD8C /* DataStorage.swift in Sources */,

@@ -30,7 +30,7 @@ class Item : NSObject, NSCoding {
 }
 
 protocol DataModelDelegate : class {
-    func updateViewModelWithItem(_:Item)
+    func didUpdateItem(_:Item)
 }
 
 class DataModel {
@@ -64,14 +64,6 @@ class DataModel {
         imageSource.getImageFor(item)
     }
     
-    let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
-        return dateFormatter
-    }()
-
 }
 
 extension DataModel : ImageSourceDelegate {
@@ -80,7 +72,7 @@ extension DataModel : ImageSourceDelegate {
         OperationQueue.main.addOperation {
             item.image = imageData;
             DataStorage.save(self.items)
-            self.delegate?.updateViewModelWithItem(item)
+            self.delegate?.didUpdateItem(item)
         }
     }
     

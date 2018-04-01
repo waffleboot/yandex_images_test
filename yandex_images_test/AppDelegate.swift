@@ -8,7 +8,7 @@ import UIKit
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let navigationController = window?.rootViewController as! UINavigationController
         let viewController = navigationController.topViewController as! ViewController
-        viewController.model = ViewControllerModelImpl(DataModel())
+        viewController.model = DataModel()
         return true
     }
 

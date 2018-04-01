@@ -5,29 +5,32 @@ class ViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
     
-    var model: ViewControllerModel! {
+    var model: DataModel! {
         didSet {
             model.delegate = self
         }
     }
     
     private var newRow: Int?
+    private let cellConfigurator = CellViewConfigurator()
     
     @IBAction private func clear() {
-        model.clickOnClearButton()
+        model.items = [Item]()
+        updateTable()
     }
     
     @IBAction private func addImage() {
-        model.clickOnAddButton()
+        model.addItem()
+        addRow(model.items.count-1)
     }
     
     override func didReceiveMemoryWarning() {
-        CellView.imagesCache.removeAllObjects()
+        cellConfigurator.didReceiveMemoryWarning()
     }
     
 }
 
-extension ViewController: ViewControllerModelDelegate {
+extension ViewController {
     
     func addRow(_ row: Int) {
         
@@ -49,26 +52,22 @@ extension ViewController: ViewControllerModelDelegate {
         tableView.endUpdates()
     }
     
+    func updateRow(_ indexPath: IndexPath) {
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [indexPath], with: .fade)
+        tableView.endUpdates()
+    }
+
     func updateTable() {
         tableView.reloadData()
     }
-    
-    func updateRow(_ row: Int) {
-        tableView.beginUpdates()
-        tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .fade)
-        tableView.endUpdates()
-    }
-    
-    func visibleRows() -> [Int]? {
-        return tableView.indexPathsForVisibleRows?.map { $0.row }
-    }
-    
+
 }
 
 extension ViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        if model.rowsCount > 0 {
+        if model.items.count > 0 {
             tableView.separatorStyle = .singleLine
             tableView.backgroundView = nil
             return 1
@@ -84,13 +83,19 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.rowsCount
+        return model.items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellView", for: indexPath) as! CellView
-        if let newRow = self.newRow, indexPath.row == newRow { } else {
-            cell.configure(model.cellViewModel(forRowAt: indexPath.row))
+        if let newRow = newRow, indexPath.row == newRow { } else {
+
+            let item = model.items[indexPath.row]
+            if item.image == nil {
+                model.needImageForItem(item)
+            }
+            cellConfigurator.configure(cell, forItem: item)
+
         }
         return cell
     }
@@ -101,7 +106,20 @@ extension ViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        model.clickOnRow(indexPath.row)
+        model.updateName(forRowAt: indexPath.row)
+        updateRow(indexPath)
     }
     
+}
+
+extension ViewController: DataModelDelegate {
+
+    func didUpdateItem(_ item: Item) {
+        let visibleRows = tableView.indexPathsForVisibleRows?.map { $0.row }
+        guard let row = visibleRows?.first(where: {
+            model.items[$0] == item
+        }) else { return }
+        updateRow(IndexPath(row: row, section: 0))
+    }
+
 }
