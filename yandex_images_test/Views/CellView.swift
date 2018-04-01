@@ -3,36 +3,36 @@ import UIKit
 
 class CellView: UITableViewCell {
     
-    @IBOutlet var siteImage: UIImageView!
-    @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var itemImage:  UIImageView!
+    @IBOutlet var itemTitle:  UILabel!
+    @IBOutlet var itemDetail: UILabel!
 
     struct ViewModel {
-        let date: String
-        let name: String
+        let title: String
+        let detail: String
         let imageData: Data?
         let token: Item.Token
     }
     
     func configure(_ viewModel: ViewModel) {
         if let image = CellView.imagesCache.object(forKey: viewModel.token) {
-            siteImage.image = image
+            itemImage.image = image
         } else if let imageData = viewModel.imageData, let image = UIImage(data: imageData) {
             CellView.imagesCache.setObject(image, forKey: viewModel.token, cost: imageData.count)
-            siteImage.image = image
+            itemImage.image = image
         } else {
-            siteImage.image = nil
+            itemImage.image = nil
         }
-        dateLabel.text = viewModel.date
-        nameLabel.text = viewModel.name
+        itemTitle.text = viewModel.title
+        itemDetail.text = viewModel.detail
     }
 
     override func prepareForReuse() {
         // view controller creates new rows with no content and updates new cells after scrolling
         // so don't forget to clear dequeued row
-        siteImage.image = nil
-        dateLabel.text = nil
-        nameLabel.text = nil
+        itemImage.image = nil
+        itemTitle.text  = nil
+        itemDetail.text = nil
     }
     
 }
